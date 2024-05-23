@@ -34,13 +34,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_customer'])) {
 if (!isset($_SESSION['returnHistory'])) {
     $_SESSION['returnHistory'] = [];
 }
-    if (isset($_POST['return'])) {
-        if (!empty($_SESSION['rentals'])) {
-            $rental = array_pop($_SESSION['rentals']);
-            $rental->car->returnCar();
-            $_SESSION['returnHistory'][] = $rental; 
-        }
-    }
+    // if (isset($_POST['return'])) {
+    //     if (!empty($_SESSION['rentals'])) {
+    //         $rental = array_pop($_SESSION['rentals']);
+    //         $rental->car->returnCar();
+    //         $_SESSION['returnHistory'][] = $rental; 
+    //     }
+    // }
             // Menyimpan rental yang dikembalikan ke dalam riwayat
 
 // Inisialisasi sesi untuk mobil dan pelanggan
@@ -87,17 +87,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $car->rent();
                 $_SESSION['rentals'][] = $rental;
             }
+          
         }
     }
 
     if (isset($_POST['return'])) {
         if (!empty($_SESSION['rentals'])) {
-            $rental = array_pop($_SESSION['rentals']);
+            $rental = array_shift($_SESSION['rentals']);
             $rental->car->returnCar();
-            $_SESSION['returnQueue'][] = $rental;
-        }
+            $_SESSION['returnHistory'][] = $rental; // Menyimpan rental yang dikembalikan ke dalam riwayat
     }
 }
+        }
 
 $rentals = $_SESSION['rentals'];
 $returnQueue = $_SESSION['returnQueue'];
